@@ -32,6 +32,13 @@ class SSHManagerApp(App):
             )
             self.ssh_list = SSHList(self.hosts, id="ssh-list")
             yield self.ssh_list
+        with Container(classes="keys-display"):
+            yield Horizontal(
+                Static("\\[↑/↓]: Navigate", classes="col keys-display-col"),
+                Static("\\[Enter]: Connect", classes="col keys-display-col"),
+                Static("\\[Ctrl+Q/Ctrl+C/Esc]: Quit", classes="col keys-display-col"),
+                classes="row"
+            )
 
     async def on_mount(self):
         self.query_one("#search", Input).focus()

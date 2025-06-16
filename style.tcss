@@ -39,6 +39,7 @@ Input {
     background: transparent;
     border: round $blue;
     height: 3;
+    margin: 0 1;
 }
 Input:focus {
     background: transparent !important;
@@ -46,28 +47,14 @@ Input:focus {
     color: $text !important;
 }
 
-
 ListView {
     background: transparent;
     border-top: round $blue;
 }
-
-.selected {
-    background: $surface1;
-}
-
 .results-box {
     border: round $blue;
+    margin: 0 1;
 }
-
-.row {
-    height: 1;
-    color: $text;
-}
-.header-row {
-    color: $dark_teal;
-}
-
 .col {
     width: 1fr;
     padding: 0 2;
@@ -77,4 +64,29 @@ ListView {
 }
 .col:last-child {
     border-right: none;
+}
+.keys-display-col {
+    text-align: center;
+}
+
+.row {
+    height: 1;
+    color: $text;
+}
+.header-row {
+    color: $dark_teal;
+}
+.selected {
+    background: $surface1;
+}
+
+.keys-display {
+    background: transparent;
+    border: round $blue;
+    height: 3;
+    margin: 0 1;
+    dock: bottom;
+    text-align: center;
+    color: $text;
+    width: 100%;
 }
