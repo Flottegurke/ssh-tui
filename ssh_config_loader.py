@@ -6,6 +6,7 @@ class SSHConfigLoader:
         hosts = []
         current_host = None
         if not config_path.exists():
+            config_path.touch()
             return hosts
         with config_path.open() as f:
             for line in f:
