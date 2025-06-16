@@ -12,6 +12,8 @@ ssh-tui is a sleek and minimal terminal user interface (TUI) for managing SSH co
 - [textual](https://github.com/Textualize/textual)
 - [rich](https://github.com/Textualize/rich)
 - A [functional `~/.ssh/config file`](https://gist.github.com/numberwhun/d986bb536af15c5fccdcd5dfa656e4a1) (can be empty or non-existent)
+> [!TIP]
+> textual and rich are automatically installed as dependencies when you initialize ssh-tui using `pip`.
 
 ## Installation
 ```shell
@@ -19,6 +21,15 @@ git clone git@github.com:flottegurke/ssh-tui.git
 cd ssh-tui
 pip install .
 ```
+
+## Usage
+```shell
+ssh-tui
+```
+- `Typing`: Filter/Search connections
+- `Arrow up` / `Arrow down`: Navigate through results (connections)
+- `Enter`: Connect to selected connection
+- `Ctrl + c` / `Ctrl + q` / `Esc`: Exit the application
 
 ## Credits
 - Layout: heavily inspired by [sshs](https://github.com/quantumsheep/sshs)

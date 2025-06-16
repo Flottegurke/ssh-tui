@@ -41,19 +41,23 @@ class SSHManagerApp(App):
             self.ssh_list.filter(event.value)
 
     async def on_key(self, event: Key) -> None:
-        if event.key == "up":
-            if self.ssh_list:
-                self.ssh_list.move_selection_up()
-            event.stop()
-        elif event.key == "down":
-            if self.ssh_list:
-                self.ssh_list.move_selection_down()
-            event.stop()
-        elif event.key == "enter":
-            selected = self.ssh_list.get_selected_host()
-            if selected:
-                await self.launch_ssh(selected)
-            event.stop()
+        match (event.key):
+            case ("up"):
+                if self.ssh_list:
+                    self.ssh_list.move_selection_up()
+                event.stop()
+            case ("down"):
+                if self.ssh_list:
+                    self.ssh_list.move_selection_down()
+                event.stop()
+            case ("enter"):
+                selected = self.ssh_list.get_selected_host()
+                if selected:
+                    await self.launch_ssh(selected)
+                event.stop()
+            case ("ctrl+q") | ("ctrl+c") | ("escape"):
+                self.exit()
+                event.stop()
 
     async def launch_ssh(self, host: dict):
         user = host.get("User", "")

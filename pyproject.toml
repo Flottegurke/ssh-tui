@@ -1,6 +1,6 @@
 [project]
 name = "ssh-tui"
-version = "0.1.1"
+version = "0.1.2"
 description = "A TUI SSH connection manager"
 authors = [
     { name = "Justus Dicker", email = "justus.dicker@web.de" },
