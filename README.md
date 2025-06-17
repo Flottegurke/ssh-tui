@@ -1,6 +1,9 @@
 # ssh-tui
 ssh-tui is a sleek and minimal terminal user interface (TUI) for managing SSH connections.
 
+![Main Screen](assets/screenshot_main_screen.png)
+![Add Connection](assets/screenshot_add_connection.png)
+
 ## Features
 - Quickly filter through SSH connections
 - Manage SSH connections from within the TUI (add, edit, delete)
