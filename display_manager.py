@@ -128,6 +128,44 @@ class DisplayManager:
         )
         app.mount(popup)
 
+    @staticmethod
+    async def show_edit_confirmation_popup(app, host="", user="", host_name="", port="", identity_file="") -> bool:
+        app.active_popup = ActivePopup.EDIT
+
+        DisplayManager.hide_normal(app)
+        DisplayManager.construct_edit_popup(app, host, user, host_name, port, identity_file)
+
+        app.confirmation_future = asyncio.Future()
+        return await app.confirmation_future
+
+    @staticmethod
+    def construct_edit_popup(app, host="", user="", host_name="", port="", identity_file=""):
+        inner_div = Container(
+            Container(
+                Static("Edit host entry:"),
+                classes="popup-header edit-popup-header"),
+            Container(
+                Horizontal(Static("Name:", classes="popup-input-label"), Input(id="host-input", value=host, placeholder="Enter display name...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("User:", classes="popup-input-label"), Input(id="user-input", value=user, placeholder="Enter user to log in as...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Destination:", classes="popup-input-label"), Input(id="host_name-input", value=host_name, placeholder="Enter ip (or domain) to connect to...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Port:", classes="popup-input-label"), Input(id="port-input", value=port, placeholder="Enter port to connect to...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Key:", classes="popup-input-label"), Input(id="identity-input", value=identity_file, placeholder="Enter path of SSH key...", classes="popup-input"), classes="popup-input-plus-label"),
+                classes="popup-body edit-popup-body"),
+            Container(
+                Static("\\[Ctrl+Y]: save", classes="popup-footer-col edit-popup-footer-col"),
+                Static("\\[Ctrl+N/Esc]: exit", classes="popup-footer-col edit-popup-footer-col"),
+                Static("\\[Ctrl+Q]: quit", classes="popup-footer-col"),
+                classes="edit-popup-footer-row"
+            ),
+            classes="popup edit-popup"
+        )
+        popup = Container(
+            inner_div,
+            id="popup",
+            classes="popup-overlay"
+        )
+        app.mount(popup)
+
     @classmethod
     def close_popup_with_confirmation(cls, app):
         if app.confirmation_future and not app.confirmation_future.done():
@@ -145,5 +183,7 @@ class DisplayManager:
         popup = app.query_one("#popup", expect_type=Container)
         popup.remove()
         DisplayManager.show_normal(app)
+        if hasattr(app, "host_list") and hasattr(app, "hosts") and app.host_list:
+            app.host_list.refresh_hosts(app.hosts)
         app.query_one("#search", Input).focus()
         app.active_popup = ActivePopup.NONE

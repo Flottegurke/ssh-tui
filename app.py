@@ -61,6 +61,8 @@ class SSHTUIManagerApp(App):
                 event.stop()
             case "ctrl+a":
                 asyncio.create_task(self.confirm_and_add())
+            case "ctrl+e":
+                asyncio.create_task(self.confirm_and_edit(self.host_list.get_selected_host()))
             case "ctrl+d":
                 asyncio.create_task(self.confirm_and_delete(self.host_list.get_selected_host()))
                 event.stop()
@@ -104,6 +106,33 @@ class SSHTUIManagerApp(App):
                 }
                 self.hosts.append(new_host)
                 self.save_and_update_hosts()
+
+    async def confirm_and_edit(self, selected_host: dict) -> None:
+        if not selected_host:
+            return
+
+        if await DisplayManager.show_edit_confirmation_popup(
+            self,
+            host=selected_host.get("Host", ""),
+            user=selected_host.get("User", ""),
+            host_name=selected_host.get("HostName", ""),
+            port=selected_host.get("Port", ""),
+            identity_file=selected_host.get("IdentityFile", "")
+        ):
+            host_input = self.query_one("#host-input", Input)
+            user_input = self.query_one("#user-input", Input)
+            host_name_input = self.query_one("#host_name-input", Input)
+            port_input = self.query_one("#port-input", Input)
+            identity_input = self.query_one("#identity-input", Input)
+
+            selected_host["Host"] = host_input.value.strip()
+            selected_host["User"] = user_input.value.strip()
+            selected_host["HostName"] = host_name_input.value.strip()
+            selected_host["Port"] = port_input.value.strip()
+            selected_host["IdentityFile"] = identity_input.value.strip()
+
+            self.save_and_update_hosts()
+
 
     def save_and_update_hosts(self) -> None:
         SSHConfigManager.save_hosts(Path("~/.ssh/config").expanduser(), self.hosts)

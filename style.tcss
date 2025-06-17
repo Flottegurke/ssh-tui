@@ -192,3 +192,27 @@ ListView {
 .addition-popup-footer-col {
     border-right: solid $green;
 }
+
+.edit-popup {
+    border: round $yellow;
+    height: auto;
+    width: 60%;
+    min-width: 57;
+    max-width: 65;
+    color: $light_green;
+}
+.edit-popup-header {
+    border-bottom: solid $yellow;
+}
+.edit-popup-body {
+    height: auto;
+}
+.edit-popup-footer-row {
+    border-top: solid $yellow;
+    dock: bottom;
+    layout: horizontal;
+    height: 2;
+}
+.edit-popup-footer-col {
+    border-right: solid $yellow;
+}
