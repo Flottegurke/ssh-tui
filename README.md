@@ -30,6 +30,8 @@ ssh-tui
 - `Arrow up` / `Arrow down`: Navigate through results (connections)
 - `Enter`: Connect to selected connection
 - `Ctrl + c` / `Ctrl + q` / `Esc`: Exit the application
+- `Ctrl + a`: Add a new connection
+- `Ctrl + e`: Edit the selected connection
 
 ## Credits
 - Layout: heavily inspired by [sshs](https://github.com/quantumsheep/sshs)
