@@ -1,0 +1,21 @@
+[project]
+name = "ssh-tui"
+version = "0.1.2"
+description = "A TUI SSH connection manager"
+authors = [
+    { name = "Justus Dicker", email = "justus.dicker@web.de" },
+]
+dependencies = [
+    "textual>=0.50.0",
+    "rich>=13.0.0"
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = "LICENSE"
+
+[project.scripts]
+ssh-tui = "app:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

@@ -1,5 +1,7 @@
-/* Theme: Catppuccin Mocha */
-/* Source: https://github.com/catppuccin/catppuccin  */
+/* -------------------------T-H-E-M-E------------------------- */
+/* Theme: Catppuccin Mocha (+ some arbitrary highlight colors) */
+/* Source: https://github.com/catppuccin/catppuccin ---------- */
+/* ----------------------------------------------------------- */
 $rosewater: #f5e0dc;
 $pink: #f5c2e7;
 $mauve: #cba6f7;
@@ -7,7 +9,9 @@ $red: #f38ba8;
 $maroon: #eba0ac;
 $peach: #fab387;
 $yellow: #f9e2af;
+$light_green: #f3fdf0;
 $green: #a6e3a1;
+$dark_green: #49AF3D
 $teal: #94e2d5;
 $dark_teal: #34c0cb
 $sky: #89dceb;
@@ -28,46 +32,36 @@ $base: #1e1e2e;
 $mantle: #181825;
 $crust: #11111b;
 
-
+/* -----------------S-T-Y-L-E------------------ */
+/* Inspired by: sshs -------------------------- */
+/* Source: https://github.com/quantumsheep/sshs */
+/* -------------------------------------------- */
 Screen {
     layout: vertical;
     background: $base;
-    color: $text;
+    color: $subtext1;
 }
 
 Input {
     background: transparent;
-    border: round $blue;
+    border: round $sapphire;
     height: 3;
+    margin: 0 1;
 }
 Input:focus {
     background: transparent !important;
-    border: round $blue !important;
+    border: round $teal !important;
     color: $text !important;
 }
-
 
 ListView {
     background: transparent;
     border-top: round $blue;
 }
-
-.selected {
-    background: $surface1;
-}
-
 .results-box {
     border: round $blue;
+    margin: 0 1;
 }
-
-.row {
-    height: 1;
-    color: $text;
-}
-.header-row {
-    color: $dark_teal;
-}
-
 .col {
     width: 1fr;
     padding: 0 2;
@@ -77,4 +71,148 @@ ListView {
 }
 .col:last-child {
     border-right: none;
+}
+.keys-display-col {
+    text-align: center;
+    border-right: solid $mauve;
+    color: $rosewater;
+}
+
+.row {
+    height: 1;
+    color: $subtext1;
+}
+.header-row {
+    color: $dark_teal;
+}
+.selected-row {
+    background: $surface1;
+}
+
+.keys-display {
+    background: transparent;
+    border: round $mauve;
+    height: 3;
+    margin: 0 1;
+    dock: bottom;
+    text-align: center;
+    width: 100%;
+}
+
+/* -----P-O-P-U-P---S-T-Y-L-E----- */
+.popup-overlay {
+    align: center middle;
+    height: 90%;
+    width: 100%;
+    layer: popup;
+}
+.popup {
+    text-wrap: nowrap;
+    padding: 0 1;
+    text-align: center;
+    margin: 0 1;
+}
+.popup-header {
+    height: 2;
+    layout: horizontal;
+    text-align: center;
+    align: center middle;
+}
+.popup-body {
+    overflow: auto;
+    border: none;
+}
+.popup-footer-col {
+    width: 1fr;
+    text-align: center;
+    align: center middle;
+}
+.popup-input {
+    border: round $sapphire;
+    height: 3;
+    width: auto;
+    max-width: 80%;
+}
+.popup-input:focus {
+    border: round $peach !important;
+}
+.popup-input-label {
+    height: 3;
+    width: auto;
+    align: left middle;
+    padding: 1 0;
+}
+.popup-input-plus-label {
+    width: 100%;
+    height: 3;
+}
+
+.deletion-popup {
+    border: round $red;
+    height: auto;
+    width: 47;
+    color: $rosewater;
+}
+.deletion-popup-header {
+    padding: 0 2;
+    border-bottom: solid $red;
+}
+.deletion-popup-body {
+    height: auto;
+}
+.deletion-popup-footer-row {
+    border-top: solid $red;
+    layout: horizontal;
+    height: 2;
+}
+.deletion-popup-footer-col {
+    border-right: solid $red;
+}
+
+.addition-popup {
+    border: round $green;
+    height: auto;
+    width: 60%;
+    min-width: 57;
+    max-width: 65;
+    color: $light_green;
+}
+.addition-popup-header {
+    border-bottom: solid $green;
+}
+.addition-popup-body {
+    height: auto;
+}
+.addition-popup-footer-row {
+    border-top: solid $green;
+    dock: bottom;
+    layout: horizontal;
+    height: 2;
+}
+.addition-popup-footer-col {
+    border-right: solid $green;
+}
+
+.edit-popup {
+    border: round $yellow;
+    height: auto;
+    width: 60%;
+    min-width: 57;
+    max-width: 65;
+    color: $light_green;
+}
+.edit-popup-header {
+    border-bottom: solid $yellow;
+}
+.edit-popup-body {
+    height: auto;
+}
+.edit-popup-footer-row {
+    border-top: solid $yellow;
+    dock: bottom;
+    layout: horizontal;
+    height: 2;
+}
+.edit-popup-footer-col {
+    border-right: solid $yellow;
 }
