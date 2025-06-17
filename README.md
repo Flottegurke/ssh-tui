@@ -3,7 +3,6 @@ ssh-tui is a sleek and minimal terminal user interface (TUI) for managing SSH co
 
 ## Features
 - Quickly filter through SSH connections
-- Supports SSH keys and password authentication
 - Manage SSH connections from within the TUI (add, edit, delete)
 - Connections get stored in your `~/.ssh/config` file
 
@@ -29,9 +28,15 @@ ssh-tui
 - `Typing`: Filter/Search connections
 - `Arrow up` / `Arrow down`: Navigate through results (connections)
 - `Enter`: Connect to selected connection
-- `Ctrl + c` / `Ctrl + q` / `Esc`: Exit the application
+- `Ctrl + c` / `Ctrl + q` / `Escape`: Exit the application
 - `Ctrl + a`: Add a new connection
 - `Ctrl + e`: Edit the selected connection
+- `Ctrl + d`: Delete the selected connection
+- While popup menus are open:
+  - `Tab` / `Shift + Tab`: Navigate between inputs
+  - `Ctrl + y`: Submit the form
+  - `Ctrl + n` / `Escape`: Cancel the form
+  - `Ctrl + q`: Exit the whole application
 
 ## Credits
 - Layout: heavily inspired by [sshs](https://github.com/quantumsheep/sshs)

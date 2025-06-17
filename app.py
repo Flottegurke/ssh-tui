@@ -7,7 +7,6 @@ from pathlib import Path
 from textual import events
 from textual.app import App, ComposeResult
 from textual.widgets import Input
-from textual.containers import Container
 
 from display_manager import DisplayManager, ActivePopup
 from ssh_config_manager import SSHConfigManager
@@ -60,15 +59,13 @@ class SSHTUIManagerApp(App):
             case "ctrl+q" | "ctrl+c" | "escape":
                 self.exit()
                 event.stop()
+            case "ctrl+a":
+                asyncio.create_task(self.confirm_and_add())
             case "ctrl+d":
-                selected_host = self.host_list.get_selected_host()
-                asyncio.create_task(self.confirm_and_delete(selected_host))
+                asyncio.create_task(self.confirm_and_delete(self.host_list.get_selected_host()))
                 event.stop()
 
-    def _exception_event(self) -> asyncio.Event:
-        return super()._exception_event
-
-    async def confirm_and_delete(self, selected_host: dict):
+    async def confirm_and_delete(self, selected_host: dict) -> None:
         if not selected_host:
             return
 
@@ -81,9 +78,37 @@ class SSHTUIManagerApp(App):
             identity_file=selected_host.get("IdentityFile", "")
         ):
             self.hosts.remove(selected_host)
-            SSHConfigManager.save_hosts(Path("~/.ssh/config").expanduser(), self.hosts)
-            self.hosts = SSHConfigManager.load_hosts(Path("~/.ssh/config").expanduser())
-            self.host_list.refresh_hosts(self.hosts)
+            self.save_and_update_hosts()
+
+    async def confirm_and_add(self) -> None:
+        if await DisplayManager.show_addition_confirmation_popup(self):
+            host_input = self.query_one("#host-input", Input)
+            user_input = self.query_one("#user-input", Input)
+            host_name_input = self.query_one("#host_name-input", Input)
+            port_input = self.query_one("#port-input", Input)
+            identity_input = self.query_one("#identity-input", Input)
+
+            host = host_input.value.strip()
+            user = user_input.value.strip()
+            host_name = host_name_input.value.strip()
+            port = port_input.value.strip()
+            identity = identity_input.value.strip()
+
+            if host:
+                new_host = {
+                    "Host": host,
+                    "User": user,
+                    "HostName": host_name,
+                    "Port": port,
+                    "IdentityFile": identity
+                }
+                self.hosts.append(new_host)
+                self.save_and_update_hosts()
+
+    def save_and_update_hosts(self) -> None:
+        SSHConfigManager.save_hosts(Path("~/.ssh/config").expanduser(), self.hosts)
+        self.hosts = SSHConfigManager.load_hosts(Path("~/.ssh/config").expanduser())
+        self.host_list.refresh_hosts(self.hosts)
 
 
     async def launch_ssh(self, host: dict) -> None:

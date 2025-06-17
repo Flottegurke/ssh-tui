@@ -65,8 +65,7 @@ class DisplayManager:
         DisplayManager.construct_deletion_popup(app, host, user, host_name, port, identity_file)
 
         app.confirmation_future = asyncio.Future()
-        result = await app.confirmation_future
-        return result
+        return await app.confirmation_future
 
     @staticmethod
     def construct_deletion_popup(app, host="", user="", host_name="", port="", identity_file=""):
@@ -83,6 +82,44 @@ class DisplayManager:
                 classes="deletion-popup-footer-row"
             ),
             classes="popup deletion-popup"
+        )
+        popup = Container(
+            inner_div,
+            id="popup",
+            classes="popup-overlay"
+        )
+        app.mount(popup)
+
+    @staticmethod
+    async def show_addition_confirmation_popup(app) -> bool:
+        app.active_popup = ActivePopup.ADD
+
+        DisplayManager.hide_normal(app)
+        DisplayManager.construct_addition_popup(app)
+
+        app.confirmation_future = asyncio.Future()
+        return await app.confirmation_future
+
+    @staticmethod
+    def construct_addition_popup(app):
+        inner_div = Container(
+            Container(
+                Static("New host entry:"),
+                classes="popup-header addition-popup-header"),
+            Container(
+                Horizontal(Static("Name:", classes="popup-input-label"), Input(id="host-input", placeholder="Enter display name...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("User:", classes="popup-input-label"), Input(id="user-input", placeholder="Enter user to log in as...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Destination:", classes="popup-input-label"), Input(id="host_name-input", placeholder="Enter ip (or domain) to connect to...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Port:", classes="popup-input-label"), Input(id="port-input", placeholder="Enter port to connect to...", classes="popup-input"), classes="popup-input-plus-label"),
+                Horizontal(Static("Key:", classes="popup-input-label"), Input(id="identity-input", placeholder="Enter path of SSH key...", classes="popup-input"), classes="popup-input-plus-label"),
+                classes="popup-body addition-popup-body"),
+            Container(
+                Static("\\[Ctrl+Y]: add", classes="popup-footer-col addition-popup-footer-col"),
+                Static("\\[Ctrl+N/Esc]: exit", classes="popup-footer-col addition-popup-footer-col"),
+                Static("\\[Ctrl+Q]: quit", classes="popup-footer-col"),
+                classes="addition-popup-footer-row"
+            ),
+            classes="popup addition-popup"
         )
         popup = Container(
             inner_div,
