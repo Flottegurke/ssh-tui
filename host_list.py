@@ -1,8 +1,6 @@
 from textual.widgets import ListView, ListItem, Static
 from textual.containers import Horizontal
-from textual import events
 from rich.text import Text
-
 
 
 class HostList(ListView):
@@ -51,7 +49,8 @@ class HostList(ListView):
         self.index_selected_host = 0
         self.refresh_list()
 
-    def highlight_match(self, text: str, query: str) -> Text:
+    @staticmethod
+    def highlight_match(text: str, query: str) -> Text:
         if not query:
             return Text(text)
 

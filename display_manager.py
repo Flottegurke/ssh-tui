@@ -1,14 +1,15 @@
 import asyncio
+
 from enum import Enum
 
-from textual.widgets import Input, Static
-from textual.containers import Container, Horizontal
-
-from textual.app import App, ComposeResult
+from textual.widgets import Static
+from textual.containers import Horizontal
+from textual.app import ComposeResult
 from textual.widgets import Input
 from textual.containers import Container
 
 from host_list import HostList
+
 
 class ActivePopup(Enum):
     NONE = 0
@@ -46,13 +47,13 @@ class DisplayManager:
             )
 
     @staticmethod
-    def hide_normal(app):
+    def hide_normal(app) -> None:
         app.query_one("#search", Input).display = False
         app.query(".results-box").first().display = False
         app.query(".keys-display").first().display = False
 
     @staticmethod
-    def show_normal(app):
+    def show_normal(app) -> None:
         app.query_one("#search", Input).display = True
         app.query(".results-box").first().display = True
         app.query(".keys-display").first().display = True
@@ -68,7 +69,7 @@ class DisplayManager:
         return await app.confirmation_future
 
     @staticmethod
-    def construct_deletion_popup(app, host="", user="", host_name="", port="", identity_file=""):
+    def construct_deletion_popup(app, host="", user="", host_name="", port="", identity_file="") -> None:
         inner_div = Container(
             Container(
                 Static("Do you really want to delete this host?"),
@@ -101,7 +102,7 @@ class DisplayManager:
         return await app.confirmation_future
 
     @staticmethod
-    def construct_addition_popup(app):
+    def construct_addition_popup(app) -> None:
         inner_div = Container(
             Container(
                 Static("New host entry:"),
@@ -139,7 +140,7 @@ class DisplayManager:
         return await app.confirmation_future
 
     @staticmethod
-    def construct_edit_popup(app, host="", user="", host_name="", port="", identity_file=""):
+    def construct_edit_popup(app, host="", user="", host_name="", port="", identity_file="") -> None:
         inner_div = Container(
             Container(
                 Static("Edit host entry:"),
@@ -167,19 +168,19 @@ class DisplayManager:
         app.mount(popup)
 
     @classmethod
-    def close_popup_with_confirmation(cls, app):
+    def close_popup_with_confirmation(cls, app) -> None:
         if app.confirmation_future and not app.confirmation_future.done():
             app.confirmation_future.set_result(True)
         cls._cleanup_popup(app)
 
     @classmethod
-    def close_popup_without_confirmation(cls, app):
+    def close_popup_without_confirmation(cls, app) -> None:
         if app.confirmation_future and not app.confirmation_future.done():
             app.confirmation_future.set_result(False)
         cls._cleanup_popup(app)
 
     @staticmethod
-    def _cleanup_popup(app):
+    def _cleanup_popup(app) -> None:
         popup = app.query_one("#popup", expect_type=Container)
         popup.remove()
         DisplayManager.show_normal(app)

@@ -12,6 +12,7 @@ from display_manager import DisplayManager, ActivePopup
 from ssh_config_manager import SSHConfigManager
 from host_list import HostList
 
+
 class SSHTUIManagerApp(App):
     CSS_PATH = ["style.tcss"]
 
@@ -33,7 +34,7 @@ class SSHTUIManagerApp(App):
         if self.host_list:
             self.host_list.filter_hosts(event.value)
 
-    async def on_key(self, event: events.Key):
+    async def on_key(self, event: events.Key) -> None:
         if self.active_popup is not ActivePopup.NONE:
             if event.key == "ctrl+y":
                 DisplayManager.close_popup_with_confirmation(self)
@@ -165,7 +166,8 @@ class SSHTUIManagerApp(App):
 
         asyncio.create_task(self.run_terminal_command(terminal_launch_command + ssh_connect_command))
 
-    def detect_terminal_launch_command(self) -> list[str] | None:
+    @staticmethod
+    def detect_terminal_launch_command() -> list[str] | None:
         terminal_environment = os.environ.get("TERMINAL")
         if terminal_environment and shutil.which(terminal_environment):
             return [terminal_environment, "-e"]
