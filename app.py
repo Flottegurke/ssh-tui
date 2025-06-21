@@ -150,7 +150,7 @@ class SSHTUIManagerApp(App):
         if not hostname:
             return
 
-        ssh_connect_command = ["ssh"]
+        ssh_connect_command = ["env", "TERM=xterm-256color", "ssh"]
         if user:
             ssh_connect_command += ["-l", user]
         if port:
